@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using EduVerse.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduVerse.Data.Models;
+namespace EduVerse.Data;
 
 public partial class EduVerseDbContext : DbContext
 {
