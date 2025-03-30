@@ -1,4 +1,5 @@
 ﻿using EduVerse.Core.Models;
+using EduVerse.Data.Contract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduVerse.Data
-{   
+namespace EduVerse.Data.Implementation
+{
     //All thses are synchronous methods
     //public class CourseCategoryRepository(EduVerseDbContext dbContext) : ICourseCategoryRepository
     //{
     //    private readonly EduVerseDbContext dbContext = dbContext;
-        
+
     //    public CourseCategory? GetById(int id)
     //    {
     //        var data = dbContext.CourseCategories.Find(id);

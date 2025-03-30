@@ -1,4 +1,4 @@
-﻿using EduVerse.Service;
+﻿using EduVerse.Service.Contract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;

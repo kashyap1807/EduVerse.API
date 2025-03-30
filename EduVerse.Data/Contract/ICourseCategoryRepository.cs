@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduVerse.Data
+namespace EduVerse.Data.Contract
 {
     //Synchronous methods
     //public interface ICourseCategoryRepository

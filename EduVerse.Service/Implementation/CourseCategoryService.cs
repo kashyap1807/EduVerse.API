@@ -1,12 +1,13 @@
 ﻿using EduVerse.Core.Dtos;
-using EduVerse.Data;
+using EduVerse.Data.Contract;
+using EduVerse.Service.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduVerse.Service
+namespace EduVerse.Service.Implementation
 {
     public class CourseCategoryService : ICourseCategoryService
     {
@@ -21,7 +22,7 @@ namespace EduVerse.Service
             //When we need data, we need to await for the call to get data
             //This await keyword tells compiler to pause the execution until data is retireved
             var data = await courseCategoryRepository.GetByIdAsync(id);
-            return new CourseCategoryDto()
+            return data == null ? null : new CourseCategoryDto()
             {
                 CategoryId = data.CategoryId,
                 CategoryName = data.CategoryName,
@@ -32,7 +33,7 @@ namespace EduVerse.Service
         public async Task<List<CourseCategoryDto>> GetCourseCategories()
         {
             var data = await courseCategoryRepository.GetCourseCategoriesAsync();
-            var dtoData = data.Select(s=> new CourseCategoryDto()
+            var dtoData = data.Select(s => new CourseCategoryDto()
             {
                 CategoryId = s.CategoryId,
                 CategoryName = s.CategoryName,

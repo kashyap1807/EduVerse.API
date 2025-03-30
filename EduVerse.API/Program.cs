@@ -1,6 +1,9 @@
 
 using EduVerse.Data;
-using EduVerse.Service;
+using EduVerse.Data.Contract;
+using EduVerse.Data.Implementation;
+using EduVerse.Service.Contract;
+using EduVerse.Service.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduVerse.API
@@ -19,6 +22,8 @@ namespace EduVerse.API
                 options.UseSqlServer(
                     configuration.GetConnectionString("EduVerseDbContext"),
                     providerOptions => providerOptions.EnableRetryOnFailure());
+                //Only for development purpose not go to PRODUCTION
+                //options.EnableServiceProviderCaching();
             });
             // Add services to the container.
 
@@ -34,6 +39,8 @@ namespace EduVerse.API
             //Addsingletone : only one time for the whole application
             builder.Services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
             builder.Services.AddScoped<ICourseCategoryService, CourseCategoryService>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
             #endregion
 
             #region Middlewares

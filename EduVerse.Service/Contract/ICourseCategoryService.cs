@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduVerse.Service
+namespace EduVerse.Service.Contract
 {
     public interface ICourseCategoryService
     {
