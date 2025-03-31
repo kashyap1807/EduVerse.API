@@ -25,6 +25,17 @@ namespace EduVerse.API
                 //Only for development purpose not go to PRODUCTION
                 //options.EnableServiceProviderCaching();
             });
+            //Cors for connection server routes to client app
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200") // Corrected frontend URL without trailing slash
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();  // Required for SignalR
+                });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -53,6 +64,7 @@ namespace EduVerse.API
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("default"); 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
