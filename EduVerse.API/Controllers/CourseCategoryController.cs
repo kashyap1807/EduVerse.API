@@ -16,10 +16,10 @@ namespace EduVerse.API.Controllers
             this.courseCategoryService = courseCategoryService;
         }
 
-        [HttpGet("GetCourseCategoryById/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{categoryId}")]
+        public async Task<IActionResult> GetById(int categoryId)
         {
-            var category = await courseCategoryService.GetByIdAsync(id);
+            var category = await courseCategoryService.GetByIdAsync(categoryId);
             //When id is not present in the database, we need to return 404 status code
             if (category == null)
             {
@@ -29,7 +29,7 @@ namespace EduVerse.API.Controllers
             return Ok(category);
         }
 
-        [HttpGet("GetAllCourseCategory")]
+        [HttpGet]
         public async Task<IActionResult> GetAllCourseCategories()
         {
             var categories = await courseCategoryService.GetCourseCategories();
