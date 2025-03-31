@@ -92,7 +92,7 @@ namespace EduVerse.Data.Implementation
                         UserName = r.User.DisplayName,
                         Rating = r.Rating,
                         Comments = r.Comments,
-                        ReviewData = r.ReviewDate
+                        ReviewDate = r.ReviewDate
                     }).OrderByDescending(o=>o.Rating).Take(10).ToList(),
                     SessionDetails = c.SessionDetails.Select(sd => new SessionDetailDto()
                     {
