@@ -13,7 +13,7 @@ namespace EduVerse.Core.Dtos
         public string UserName { get; set; } = string.Empty;
         public int Rating {  get; set; }
         public string? Comments { get; set; }
-        public DateTime ReviewData { get; set; }
+        public DateTime ReviewDate { get; set; }
 
     }
 }
