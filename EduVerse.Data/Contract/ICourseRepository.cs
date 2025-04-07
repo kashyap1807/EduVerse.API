@@ -1,4 +1,5 @@
 ﻿using EduVerse.Core.Dtos;
+using EduVerse.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace EduVerse.Data.Contract
         Task<List<CourseDto>> GetAllCourseAsync(int? categoryId = null);
         //return Detailed Particular course
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
+        Task AddCourseAsync(Course course);
     }
 }

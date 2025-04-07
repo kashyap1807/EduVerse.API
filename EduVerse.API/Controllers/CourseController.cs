@@ -40,5 +40,16 @@ namespace EduVerse.API.Controllers
             }
             return Ok(courseDetail);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCourse([FromBody] CourseDetailDto courseDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await courseService.AddCourseAsync(courseDto);
+            return Ok();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EduVerse.Core.Dtos;
+using EduVerse.Core.Models;
 using EduVerse.Data.Contract;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -111,6 +112,11 @@ namespace EduVerse.Data.Implementation
                     }
                 }).FirstOrDefaultAsync();
             return course;
+        }
+        public async Task AddCourseAsync(Course course)
+        {
+            await dbContext.Courses.AddAsync(course);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EduVerse.Core.Dtos;
+using EduVerse.Core.Models;
 using EduVerse.Data.Contract;
 using EduVerse.Service.Contract;
 using System;
@@ -24,6 +25,32 @@ namespace EduVerse.Service.Implementation
         public Task<CourseDetailDto> GetCourseDetailAsync(int courseId)
         {
             return courseRepository.GetCourseDetailAsync(courseId);
+        }
+
+        public async Task AddCourseAsync(CourseDetailDto courseDto)
+        {
+            var courseModel = new Course
+            {
+                Title = courseDto.Title,
+                Description = courseDto.Description,
+                Price = courseDto.Price,
+                CourseType = courseDto.CourseType,
+                SeatsAvailable = courseDto.SeatsAvailable,
+                Duration = courseDto.Duration,
+                CategoryId = courseDto.CategoryId,
+                InstructorId = courseDto.InstructorId,
+                StartDate = courseDto.StartDate,
+                EndDate = courseDto.EndDate,
+                SessionDetails = courseDto.SessionDetails.Select(s => new SessionDetail
+                {
+                    Title = s.Title,
+                    Description = s.Description,
+                    VideoUrl = s.VideoUrl,
+                    VideoOrder = s.VideoOrder
+                }).ToList()
+            };
+
+            await courseRepository.AddCourseAsync(courseModel);
         }
     }
 }

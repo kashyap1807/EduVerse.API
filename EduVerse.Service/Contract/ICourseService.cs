@@ -11,5 +11,7 @@ namespace EduVerse.Service.Contract
     {
         Task<List<CourseDto>> GetAllCoursesAsync(int? categoryId = null);
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
+
+        Task AddCourseAsync(CourseDetailDto courseDto);
     }
 }
