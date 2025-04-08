@@ -52,5 +52,61 @@ namespace EduVerse.Service.Implementation
 
             await courseRepository.AddCourseAsync(courseModel);
         }
+
+        public async Task UpdateCourseAsync(CourseDetailDto courseDetailDto)
+        {
+            var course = await courseRepository.GetCourseByIdAsync(courseDetailDto.CourseId);
+
+            if (course == null)
+            {
+                throw new Exception("Course not found");
+            }
+
+            course.Title = courseDetailDto.Title;
+            course.Description = courseDetailDto.Description;
+            course.Price = courseDetailDto.Price;
+            course.CourseType = courseDetailDto.CourseType;
+            course.SeatsAvailable = courseDetailDto.SeatsAvailable;
+            course.Duration = courseDetailDto.Duration;
+            course.CategoryId = courseDetailDto.CategoryId;
+            course.InstructorId = courseDetailDto.InstructorId;
+            course.StartDate = courseDetailDto.StartDate;
+            course.EndDate = courseDetailDto.EndDate;
+
+            var existingSessionIds = course.SessionDetails.Select(s => s.SessionId).ToList();
+            var updatedSessionIds = courseDetailDto.SessionDetails.Select(s => s.SessionId).ToList();
+
+            var sessionsToRemove = course.SessionDetails.Where(s => !updatedSessionIds.Contains(s.SessionId)).ToList();
+            foreach(var session in sessionsToRemove)
+            {
+                course.SessionDetails.Remove(session);
+                //courseRepository.
+            }
+
+            foreach(var sessionDtos in courseDetailDto.SessionDetails)
+            {
+                var existingSession = course.SessionDetails.FirstOrDefault(s => s.SessionId == sessionDtos.SessionId);
+                if (existingSession != null)
+                {
+                    existingSession.Title = sessionDtos.Title;
+                    existingSession.Description = sessionDtos.Description;
+                    existingSession.VideoUrl = sessionDtos.VideoUrl;
+                    existingSession.VideoOrder = sessionDtos.VideoOrder;
+                }
+                else
+                {
+                    var newSession = new SessionDetail
+                    {
+                        Title = sessionDtos.Title,
+                        Description = sessionDtos.Description,
+                        VideoUrl = sessionDtos.VideoUrl,
+                        VideoOrder = sessionDtos.VideoOrder,
+                        CourseId = course.CourseId,
+                    };
+                    course.SessionDetails.Add(newSession);
+                }
+            }
+            await courseRepository.UpdateCourseAsync(course);
+        }
     }
 }

@@ -51,5 +51,21 @@ namespace EduVerse.API.Controllers
             await courseService.AddCourseAsync(courseDto);
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseDetailDto courseDetailDto)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id != courseDetailDto.CourseId)
+            {
+                return BadRequest("Course ID mismatch");
+            }
+            await courseService.UpdateCourseAsync(courseDetailDto);
+            return NoContent();
+        }
     }
 }

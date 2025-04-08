@@ -13,5 +13,6 @@ namespace EduVerse.Service.Contract
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
 
         Task AddCourseAsync(CourseDetailDto courseDto);
+        Task UpdateCourseAsync(CourseDetailDto courseDetailDto);
     }
 }

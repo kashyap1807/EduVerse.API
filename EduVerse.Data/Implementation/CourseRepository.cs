@@ -118,5 +118,16 @@ namespace EduVerse.Data.Implementation
             await dbContext.Courses.AddAsync(course);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateCourseAsync(Course course)
+        {
+            dbContext.Courses.Update(course);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Course> GetCourseByIdAsync(int courseId)
+        {
+            return await dbContext.Courses.Include(c => c.SessionDetails).FirstOrDefaultAsync(c => c.CourseId == courseId);
+        }
     }
 }

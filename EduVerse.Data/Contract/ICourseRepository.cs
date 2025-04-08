@@ -16,5 +16,7 @@ namespace EduVerse.Data.Contract
         //return Detailed Particular course
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
         Task AddCourseAsync(Course course);
+        Task<Course> GetCourseByIdAsync(int courseId);
+        Task UpdateCourseAsync(Course course);
     }
 }
