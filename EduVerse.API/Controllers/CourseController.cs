@@ -67,5 +67,12 @@ namespace EduVerse.API.Controllers
             await courseService.UpdateCourseAsync(courseDetailDto);
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            await courseService.DeleteCourseAsync(id);
+            return NoContent();
+        }
     }
 }

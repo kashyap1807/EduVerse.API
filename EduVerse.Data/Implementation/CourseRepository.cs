@@ -129,5 +129,20 @@ namespace EduVerse.Data.Implementation
         {
             return await dbContext.Courses.Include(c => c.SessionDetails).FirstOrDefaultAsync(c => c.CourseId == courseId);
         }
+
+        public async Task DeleteCourseAsync(int courseId)
+        {
+            var course = await GetCourseByIdAsync(courseId);
+            if (course != null)
+            {
+                dbContext.Courses.Remove(course);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public void RemoveSessionDetail(SessionDetail sessionDetail)
+        {
+            dbContext.SessionDetails.Remove(sessionDetail);
+        }
     }
 }

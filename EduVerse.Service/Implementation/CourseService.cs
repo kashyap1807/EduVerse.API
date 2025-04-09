@@ -80,7 +80,7 @@ namespace EduVerse.Service.Implementation
             foreach(var session in sessionsToRemove)
             {
                 course.SessionDetails.Remove(session);
-                //courseRepository.
+                courseRepository.RemoveSessionDetail(session);
             }
 
             foreach(var sessionDtos in courseDetailDto.SessionDetails)
@@ -107,6 +107,10 @@ namespace EduVerse.Service.Implementation
                 }
             }
             await courseRepository.UpdateCourseAsync(course);
+        }
+        public async Task DeleteCourseAsync(int courseId)
+        {
+            await courseRepository.DeleteCourseAsync(courseId);
         }
     }
 }
