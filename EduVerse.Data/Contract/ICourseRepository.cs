@@ -20,5 +20,6 @@ namespace EduVerse.Data.Contract
         Task UpdateCourseAsync(Course course);
         Task DeleteCourseAsync(int courseId);
         void RemoveSessionDetail(SessionDetail sessionDetail);
+        Task<List<Instructor>> GetAllInstructorsAsync();
     }
 }

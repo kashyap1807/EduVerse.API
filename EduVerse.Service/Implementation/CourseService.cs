@@ -112,5 +112,29 @@ namespace EduVerse.Service.Implementation
         {
             await courseRepository.DeleteCourseAsync(courseId);
         }
+
+        public async Task<List<InstructorDto>> GetAllInstructorsAsync()
+        {
+            var inst = await courseRepository.GetAllInstructorsAsync();
+            if (inst == null)
+            {
+                throw new Exception("Instructors not found");
+            }
+            List<InstructorDto> instructorDtos = new List<InstructorDto>();
+            foreach (var instructor in inst)
+            {
+                var instructorDto = new InstructorDto
+                {
+                    InstructorId = instructor.InstructorId,
+                    FirstName = instructor.FirstName,
+                    LastName = instructor.LastName,
+                    Email = instructor.Email,
+                    Bio = instructor.Bio,
+                    UserId = instructor.UserId
+                };
+                instructorDtos.Add(instructorDto);
+            }
+            return instructorDtos;
+        }
     }
 }

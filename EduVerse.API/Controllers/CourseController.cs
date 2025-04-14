@@ -74,5 +74,12 @@ namespace EduVerse.API.Controllers
             await courseService.DeleteCourseAsync(id);
             return NoContent();
         }
+
+        [HttpGet("Instructors")]        
+        public async Task<ActionResult<List<InstructorDto>>> GetInstructors()
+        {
+            var instructors = await courseService.GetAllInstructorsAsync();
+            return Ok(instructors);
+        }
     }
 }

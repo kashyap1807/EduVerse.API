@@ -144,5 +144,11 @@ namespace EduVerse.Data.Implementation
         {
             dbContext.SessionDetails.Remove(sessionDetail);
         }
+
+        public async Task<List<Instructor>> GetAllInstructorsAsync()
+        {
+            List<Instructor> i = await dbContext.Instructors.ToListAsync();
+            return i;
+        }
     }
 }
