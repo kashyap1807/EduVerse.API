@@ -6,8 +6,11 @@ using EduVerse.Data.Implementation;
 using EduVerse.Service.Contract;
 using EduVerse.Service.Implementation;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 using Serilog.Templates;
 using System.Net;
@@ -30,6 +33,7 @@ namespace EduVerse.API
             {
                 #region Service Configuration
                 var builder = WebApplication.CreateBuilder(args);
+                var configuration = builder.Configuration;
 
                 //Seri log & API-insights
                 builder.Services.AddApplicationInsightsTelemetry();
@@ -46,8 +50,54 @@ namespace EduVerse.API
 
                 Log.Information("Starting the EduVerseByKashyap API...");
 
+                #region AD B2C
+                builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                  .AddMicrosoftIdentityWebApi(options =>
+                  {
+                      configuration.Bind("AzureAdB2C", options);
+                      options.Events = new JwtBearerEvents();
+
+                      //options.Events = new JwtBearerEvents
+                      //{
+                      //    OnTokenValidated = context =>
+                      //    {
+                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+
+                      //        // Access the scope claim (scp) directly
+                      //        var scopeClaim = context.Principal?.Claims.FirstOrDefault(c => c.Type == "scp")?.Value;
+
+                      //        if (scopeClaim != null)
+                      //        {
+                      //            logger.LogInformation("Scope found in token: {Scope}", scopeClaim);
+                      //        }
+                      //        else
+                      //        {
+                      //            logger.LogWarning("Scope claim not found in token.");
+                      //        }
+
+                      //        return Task.CompletedTask;
+                      //    },
+                      //    OnAuthenticationFailed = context =>
+                      //    {
+                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                      //        logger.LogError("Authentication failed: {Message}", context.Exception.Message);
+                      //        return Task.CompletedTask;
+                      //    },
+                      //    OnChallenge = context =>
+                      //    {
+                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                      //        logger.LogError("Challenge error: {ErrorDescription}", context.ErrorDescription);
+                      //        return Task.CompletedTask;
+                      //    }
+                      //};
+                  }, options => { configuration.Bind("AzureAdB2C", options); });
+
+                // The following flag can be used to get more descriptive errors in development environments
+                IdentityModelEventSource.ShowPII = false;
+                #endregion
+
                 //Database Configuration
-                var configuration = builder.Configuration;
+                //var configuration = builder.Configuration;
                 builder.Services.AddDbContextPool<EduVerseDbContext>(options =>
                 {
                     options.UseSqlServer(
@@ -126,6 +176,7 @@ namespace EduVerse.API
 
                 app.UseAuthorization();
 
+                app.UseAuthentication();
 
                 app.MapControllers();
 
