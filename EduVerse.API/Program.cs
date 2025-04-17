@@ -50,51 +50,50 @@ namespace EduVerse.API
 
                 Log.Information("Starting the EduVerseByKashyap API...");
 
-                #region AD B2C
+                #region AD B2C configuration
                 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                   .AddMicrosoftIdentityWebApi(options =>
                   {
                       configuration.Bind("AzureAdB2C", options);
-                      options.Events = new JwtBearerEvents();
 
-                      //options.Events = new JwtBearerEvents
-                      //{
-                      //    OnTokenValidated = context =>
-                      //    {
-                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                      options.Events = new JwtBearerEvents
+                      {
+                          OnTokenValidated = context =>
+                          {
+                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
 
-                      //        // Access the scope claim (scp) directly
-                      //        var scopeClaim = context.Principal?.Claims.FirstOrDefault(c => c.Type == "scp")?.Value;
+                              // Access the scope claim (scp) directly
+                              var scopeClaim = context.Principal?.Claims.FirstOrDefault(c => c.Type == "scp")?.Value;
 
-                      //        if (scopeClaim != null)
-                      //        {
-                      //            logger.LogInformation("Scope found in token: {Scope}", scopeClaim);
-                      //        }
-                      //        else
-                      //        {
-                      //            logger.LogWarning("Scope claim not found in token.");
-                      //        }
+                              if (scopeClaim != null)
+                              {
+                                  logger.LogInformation("Scope found in token: {Scope}", scopeClaim);
+                              }
+                              else
+                              {
+                                  logger.LogWarning("Scope claim not found in token.");
+                              }
 
-                      //        return Task.CompletedTask;
-                      //    },
-                      //    OnAuthenticationFailed = context =>
-                      //    {
-                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                      //        logger.LogError("Authentication failed: {Message}", context.Exception.Message);
-                      //        return Task.CompletedTask;
-                      //    },
-                      //    OnChallenge = context =>
-                      //    {
-                      //        var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                      //        logger.LogError("Challenge error: {ErrorDescription}", context.ErrorDescription);
-                      //        return Task.CompletedTask;
-                      //    }
-                      //};
+                              return Task.CompletedTask;
+                          },
+                          OnAuthenticationFailed = context =>
+                          {
+                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                              logger.LogError("Authentication failed: {Message}", context.Exception.Message);
+                              return Task.CompletedTask;
+                          },
+                          OnChallenge = context =>
+                          {
+                              var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                              logger.LogError("Challenge error: {ErrorDescription}", context.ErrorDescription);
+                              return Task.CompletedTask;
+                          }
+                      };
                   }, options => { configuration.Bind("AzureAdB2C", options); });
 
                 // The following flag can be used to get more descriptive errors in development environments
-                IdentityModelEventSource.ShowPII = false;
-                #endregion
+                IdentityModelEventSource.ShowPII = true;
+                #endregion  AD B2C configuration
 
                 //Database Configuration
                 //var configuration = builder.Configuration;
@@ -121,10 +120,6 @@ namespace EduVerse.API
 
                 builder.Services.AddControllers();
 
-                // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-                builder.Services.AddEndpointsApiExplorer();
-                builder.Services.AddSwaggerGen();
-
                 //configure services DI here
                 //AddScoped : when a request is hit till the request is completely processed and return only one instance of requested class will be given
                 //AddTransient : when a request is hit till the request is completely processed and return new instance of requested class will be given
@@ -137,6 +132,10 @@ namespace EduVerse.API
                 //for seri log Application insights
                 builder.Services.AddTransient<RequestBodyLoggingMiddleware>();
                 builder.Services.AddTransient<ResponseBodyLoggingMiddleware>();
+
+                // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+                builder.Services.AddEndpointsApiExplorer();
+                builder.Services.AddSwaggerGen();
 
                 #endregion
 
@@ -174,9 +173,10 @@ namespace EduVerse.API
 
                 app.UseHttpsRedirection();
 
-                app.UseAuthorization();
+                app.UseRouting();
 
                 app.UseAuthentication();
+                app.UseAuthorization();
 
                 app.MapControllers();
 
