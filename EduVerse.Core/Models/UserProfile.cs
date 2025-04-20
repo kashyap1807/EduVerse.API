@@ -18,6 +18,7 @@ public partial class UserProfile
     public string Email { get; set; }
 
     public string AdObjId { get; set; }
+    public string? ProfilePictureUrl { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 

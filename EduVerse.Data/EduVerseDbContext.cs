@@ -197,6 +197,9 @@ public partial class EduVerseDbContext : DbContext
 
             entity.ToTable("UserProfile");
 
+            entity.Property(e => e.ProfilePictureUrl)
+                .IsRequired()
+                .HasMaxLength(500);
             entity.Property(e => e.AdObjId)
                 .IsRequired()
                 .HasMaxLength(128);

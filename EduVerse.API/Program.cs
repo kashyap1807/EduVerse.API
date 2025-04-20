@@ -128,6 +128,9 @@ namespace EduVerse.API
                 builder.Services.AddScoped<ICourseCategoryService, CourseCategoryService>();
                 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
                 builder.Services.AddScoped<ICourseService, CourseService>();
+                builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+                builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+                builder.Services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
 
                 //for seri log Application insights
                 builder.Services.AddTransient<RequestBodyLoggingMiddleware>();
