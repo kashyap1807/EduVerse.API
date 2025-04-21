@@ -32,7 +32,7 @@ namespace EduVerse.Data.Implementation
                     LastName = user.LastName,
                     Email = user.Email,
                     DisplayName = user.DisplayName,
-                    UserRoleModel = new List<UserRoleDto>()
+                    UserRoleDto = new List<UserRoleDto>()
                 };
                 if(user.Instructors.Any())
                 {

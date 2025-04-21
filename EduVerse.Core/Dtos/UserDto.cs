@@ -21,7 +21,7 @@ namespace EduVerse.Core.Dtos
         public string AdObjId { get; set; } = null!;
         public string? ProfilePictureUrl { get; set; }
         public string? Bio { get; set; }
-        public required List<UserRoleDto> UserRoleModel { get; set; }
+        public required List<UserRoleDto> UserRoleDto { get; set; }
     }
 
     public class UserRoleDto
