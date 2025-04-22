@@ -1,5 +1,5 @@
 ﻿using Azure.Storage.Blobs;
-using EduVerse.Data.Contract;
+using EduVerse.Service.Contract;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduVerse.Data.Implementation
+namespace EduVerse.Service.Implementation
 {
     public class AzureBlobStorageService:IAzureBlobStorageService
     {
@@ -21,19 +21,19 @@ namespace EduVerse.Data.Implementation
             //_blobServiceClient = new BlobServiceClient(connectionString);
         }
 
-        //public async Task<string> UploadAsync(byte[] fileData, string fileName, string containerName = "")
-        //{
-        //    var containerClient = _blobServiceClient.GetBlobContainerClient(string.IsNullOrEmpty(containerName) ? _containerName : containerName);
-        //    await containerClient.CreateIfNotExistsAsync();
+        public async Task<string> UploadAsync(byte[] fileData, string fileName, string containerName = "")
+        {
+            var containerClient = _blobServiceClient.GetBlobContainerClient(string.IsNullOrEmpty(containerName) ? _containerName : containerName);
+            await containerClient.CreateIfNotExistsAsync();
 
-        //    var blobClient = containerClient.GetBlobClient(fileName);
+            var blobClient = containerClient.GetBlobClient(fileName);
 
-        //    using (var stream = new MemoryStream(fileData))
-        //    {
-        //        await blobClient.UploadAsync(stream, true);
-        //    }
+            using (var stream = new MemoryStream(fileData))
+            {
+                await blobClient.UploadAsync(stream, true);
+            }
 
-        //    return blobClient.Uri.ToString();
-        //}
+            return blobClient.Uri.ToString();
+        }
     }
 }

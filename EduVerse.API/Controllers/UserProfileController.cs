@@ -44,7 +44,7 @@ namespace EduVerse.API.Controllers
                     // Upload the byte array or stream to Azure Blob Storage
                     //pictureUrl = await azureBlobStorageService.UploadAsync(stream.ToArray(),
                     //    $"{dto.UserId}_profile_picture.{dto.Picture.FileName.Split('.').LastOrDefault()}");
-                                        
+
                 }
 
                 await service.UpdateUserProfilePicture(dto.UserId, pictureUrl);
