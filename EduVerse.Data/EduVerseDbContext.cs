@@ -34,8 +34,32 @@ public partial class EduVerseDbContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
+    public virtual DbSet<VideoRequest> VideoRequests { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<VideoRequest>(entity =>
+        {
+            entity.HasKey(e => e.VideoRequestId).HasName("PK_VideoRequest_VideoRequestId");
+
+            entity.ToTable("VideoRequest");
+
+            entity.Property(e => e.RequestDescription)
+                .IsRequired()
+                .HasMaxLength(4000);
+            entity.Property(e => e.Response).HasMaxLength(4000);
+            entity.Property(e => e.ShortTitle)
+                .IsRequired()
+                .HasMaxLength(200);
+            entity.Property(e => e.SubTopic)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Topic)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.VideoUrls).HasMaxLength(2000);
+        });
+
         modelBuilder.Entity<Course>(entity =>
         {
             entity.HasKey(e => e.CourseId).HasName("PK_Course_CourseId");
