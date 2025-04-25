@@ -44,20 +44,18 @@ public partial class EduVerseDbContext : DbContext
 
             entity.ToTable("VideoRequest");
 
-            entity.Property(e => e.RequestDescription)
-                .IsRequired()
-                .HasMaxLength(4000);
+            entity.Property(e => e.RequestDescription).HasMaxLength(4000);
             entity.Property(e => e.Response).HasMaxLength(4000);
-            entity.Property(e => e.ShortTitle)
-                .IsRequired()
-                .HasMaxLength(200);
-            entity.Property(e => e.SubTopic)
-                .IsRequired()
-                .HasMaxLength(50);
-            entity.Property(e => e.Topic)
-                .IsRequired()
-                .HasMaxLength(50);
+            entity.Property(e => e.ShortTitle).HasMaxLength(200);
+            entity.Property(e => e.SubTopic).HasMaxLength(50);
+            entity.Property(e => e.RequestStatus).HasMaxLength(50);
+            entity.Property(e => e.Topic).HasMaxLength(50);
             entity.Property(e => e.VideoUrls).HasMaxLength(2000);
+
+            entity.HasOne(d => d.User).WithMany(p => p.VideoRequests)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_VideoRequest_UserProfile");
         });
 
         modelBuilder.Entity<Course>(entity =>
