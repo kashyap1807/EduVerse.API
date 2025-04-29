@@ -1,4 +1,5 @@
 
+using EduVerse.API.Common;
 using EduVerse.API.Middlewares;
 using EduVerse.Data;
 using EduVerse.Data.Contract;
@@ -119,7 +120,7 @@ namespace EduVerse.API
                 // Add services to the container.
 
                 builder.Services.AddControllers();
-
+                builder.Services.AddAutoMapper(typeof(MappingProfile));
                 //configure services DI here
                 //AddScoped : when a request is hit till the request is completely processed and return only one instance of requested class will be given
                 //AddTransient : when a request is hit till the request is completely processed and return new instance of requested class will be given
@@ -133,6 +134,8 @@ namespace EduVerse.API
                 builder.Services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
                 builder.Services.AddScoped<IVideoRequestRepository, VideoRequestRepository>();
                 builder.Services.AddScoped<IVideoRequestService, VideoRequestService>();
+                builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+                builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 
                 //for seri log Application insights
                 builder.Services.AddTransient<RequestBodyLoggingMiddleware>();

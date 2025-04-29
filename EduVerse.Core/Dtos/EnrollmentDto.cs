@@ -18,7 +18,7 @@ namespace EduVerse.Core.Dtos
         public DateTime EnrollmentDate { get; set; }
 
         public string PaymentStatus { get; set; } = null!;
-        public CoursePaymentDto CoursePaymentDto { get; set; }
+        public CoursePaymentDto? CoursePaymentDto { get; set; }
     }
 
     public class CoursePaymentDto
