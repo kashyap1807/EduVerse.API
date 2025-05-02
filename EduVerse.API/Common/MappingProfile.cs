@@ -26,15 +26,15 @@ namespace EduVerse.API.Common
             CreateMap<CoursePaymentDto, Payment>();
             CreateMap<Payment, CoursePaymentDto>();
 
-            //CreateMap<Review, UserReviewModel>()
-            //.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.User.LastName}, {src.User.FirstName}"));
+            CreateMap<Review, UserReviewDto>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.User.LastName}, {src.User.FirstName}"));
 
-            //CreateMap<UserReviewModel, Review>()
-            //    .ForMember(dest => dest.User, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Course, opt => opt.Ignore());
+            CreateMap<UserReviewDto, Review>()
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.Course, opt => opt.Ignore());
 
-            //CreateMap<InstructorModel, Instructor>();
-            //CreateMap<Instructor, InstructorModel>();
+            //CreateMap<InstructorDto, Instructor>();
+            //CreateMap<Instructor, InstructorDto>();
         }
     }
 }
