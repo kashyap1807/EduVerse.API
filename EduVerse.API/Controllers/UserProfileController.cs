@@ -1,6 +1,8 @@
 ﻿using EduVerse.API.Dto;
+using EduVerse.Core.Dtos;
 using EduVerse.Data.Contract;
 using EduVerse.Service.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +10,7 @@ namespace EduVerse.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileService service;
@@ -20,6 +23,11 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetUserProfile([FromRoute] int id)
         {
             var userIfo = await service.GetUserInfoAsync(id);
