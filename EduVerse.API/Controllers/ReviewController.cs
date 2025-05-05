@@ -1,5 +1,6 @@
 ﻿using EduVerse.Core.Dtos;
 using EduVerse.Service.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace EduVerse.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReviewController : ControllerBase
     {
         private readonly IReviewService _service;

@@ -1,12 +1,15 @@
 ﻿using EduVerse.Core.Dtos;
 using EduVerse.Service.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace EduVerse.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;
@@ -42,6 +45,9 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        //[AdminRole]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> AddCourse([FromBody] CourseDetailDto courseDto)
         {
             if (!ModelState.IsValid)
@@ -53,6 +59,9 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
+        //[AdminRole]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseDetailDto courseDetailDto)
         {
             
@@ -69,13 +78,17 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
+        //[AdminRole]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
             await courseService.DeleteCourseAsync(id);
             return NoContent();
         }
 
-        [HttpGet("Instructors")]        
+        [HttpGet("Instructors")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Read")]
         public async Task<ActionResult<List<InstructorDto>>> GetInstructors()
         {
             var instructors = await courseService.GetAllInstructorsAsync();
