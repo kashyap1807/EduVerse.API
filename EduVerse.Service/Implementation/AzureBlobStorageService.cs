@@ -17,8 +17,8 @@ namespace EduVerse.Service.Implementation
         public AzureBlobStorageService(IConfiguration configuration)
         {
             // Fetch the connection string directly from configuration
-            //var connectionString = configuration["AzureBlobStorage:ConnectionString"];
-            //_blobServiceClient = new BlobServiceClient(connectionString);
+            var connectionString = configuration["AzureBlobStorage:ConnectionString"];
+            _blobServiceClient = new BlobServiceClient(connectionString);
         }
 
         public async Task<string> UploadAsync(byte[] fileData, string fileName, string containerName = "")

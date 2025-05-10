@@ -28,7 +28,7 @@ namespace EduVerse.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetUserProfile([FromRoute] int id)
+        public async Task<IActionResult> GetUserProfile([FromRoute] int id) 
         {
             var userIfo = await service.GetUserInfoAsync(id);
             if (userIfo == null)
@@ -50,8 +50,8 @@ namespace EduVerse.API.Controllers
                     await dto.Picture.CopyToAsync(stream);
 
                     // Upload the byte array or stream to Azure Blob Storage
-                    //pictureUrl = await azureBlobStorageService.UploadAsync(stream.ToArray(),
-                    //    $"{dto.UserId}_profile_picture.{dto.Picture.FileName.Split('.').LastOrDefault()}");
+                    pictureUrl = await azureBlobStorageService.UploadAsync(stream.ToArray(),
+                        $"{dto.UserId}_profile_picture.{dto.Picture.FileName.Split('.').LastOrDefault()}");
 
                 }
 
