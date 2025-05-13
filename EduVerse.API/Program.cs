@@ -138,6 +138,7 @@ namespace EduVerse.API
                 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
                 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
                 builder.Services.AddScoped<IReviewService, ReviewService>();
+                builder.Services.AddScoped<IEmailNotification, EmailNotification>();
                 //for seri log Application insights
                 builder.Services.AddTransient<RequestBodyLoggingMiddleware>();
                 builder.Services.AddTransient<ResponseBodyLoggingMiddleware>();
