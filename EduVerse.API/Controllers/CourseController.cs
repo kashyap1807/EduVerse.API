@@ -14,10 +14,12 @@ namespace EduVerse.API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;
+        private readonly IAzureBlobStorageService azureBlobStorageService;
 
-        public CourseController(ICourseService courseService)
+        public CourseController(ICourseService courseService,IAzureBlobStorageService azureBlobStorageService)
         {
             this.courseService = courseService;
+            this.azureBlobStorageService = azureBlobStorageService;
         }
 
         [HttpGet]
@@ -95,5 +97,35 @@ namespace EduVerse.API.Controllers
             var instructors = await courseService.GetAllInstructorsAsync();
             return Ok(instructors);
         }
+
+        //[HttpPost("upload-thumbnail")]
+        //[Authorize]
+        //public async Task<IActionResult> UploadThumbnail(IFormFile file)
+        //{
+        //    var courseId = Convert.ToInt32(Request.Form["courseId"]);
+        //    string thumbnailUrl = null;
+
+        //    if (file == null || file.Length == 0)
+        //    {
+        //        return BadRequest("No file uploaded");
+        //    }
+        //    var course = await courseService.GetCourseDetailAsync(courseId);
+        //    if (course == null)
+        //    {
+        //        return NotFound("Course not found");
+        //    }
+
+        //    if(file != null)
+        //    {
+        //        using (var stream = new MemoryStream())
+        //        {
+        //            await file.CopyToAsync(stream);
+
+        //            thumbnailUrl = await azureBlobStorageService.UploadAsync(stream.ToArray(), $"{courseId}_{course.Title.Trim().Replace(' ', '_')}.{file.FileName.Split('.').LastOrDefault()}", "course-preview");
+
+        //            await courseService.Upd
+        //        }
+        //    }
+        //}
     }
 }

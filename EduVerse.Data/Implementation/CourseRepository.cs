@@ -150,5 +150,15 @@ namespace EduVerse.Data.Implementation
             List<Instructor> i = await dbContext.Instructors.ToListAsync();
             return i;
         }
+
+        //public async Task<bool> UpdateCourseThumbnail(string courseThumbnailUrl, int courseId)
+        //{
+        //    var course = await dbContext.Courses.FindAsync(courseId);
+        //    if (course != null)
+        //    {
+        //        course.Thumbnail = courseThumbnailUrl;
+        //    }
+        //    return await dbContext.SaveChangesAsync() > 0;
+        //}
     }
 }

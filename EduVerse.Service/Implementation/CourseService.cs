@@ -136,5 +136,10 @@ namespace EduVerse.Service.Implementation
             }
             return instructorDtos;
         }
+
+        //public Task<bool> UpdateCourseThumbnail(string courseThumbnailUrl,int courseId)
+        //{
+        //    return courseRepository.UpdateCourseThumbnail(courseThumbnailUrl, courseId);
+        //}
     }
 }
