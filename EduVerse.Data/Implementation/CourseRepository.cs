@@ -151,14 +151,14 @@ namespace EduVerse.Data.Implementation
             return i;
         }
 
-        //public async Task<bool> UpdateCourseThumbnail(string courseThumbnailUrl, int courseId)
-        //{
-        //    var course = await dbContext.Courses.FindAsync(courseId);
-        //    if (course != null)
-        //    {
-        //        course.Thumbnail = courseThumbnailUrl;
-        //    }
-        //    return await dbContext.SaveChangesAsync() > 0;
-        //}
+        public async Task<bool> UpdateCourseThumbnail(string courseThumbnailUrl, int courseId)
+        {
+            var course = await dbContext.Courses.FindAsync(courseId);
+            if (course != null)
+            {
+                course.Thumbnail = courseThumbnailUrl;
+            }
+            return await dbContext.SaveChangesAsync() > 0;
+        }
     }
 }
