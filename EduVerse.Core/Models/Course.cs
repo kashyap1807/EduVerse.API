@@ -29,6 +29,8 @@ public partial class Course
 
     public DateTime? EndDate { get; set; }
 
+    public string? Thumbnail { get; set; }
+
     public virtual CourseCategory Category { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
