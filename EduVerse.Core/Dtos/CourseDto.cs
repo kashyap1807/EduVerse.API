@@ -30,6 +30,7 @@ namespace EduVerse.Core.Dtos
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+        public string? Thumbnail { get; set; }
 
         public virtual CourseCategoryDto Category { get; set; } = null!;
 

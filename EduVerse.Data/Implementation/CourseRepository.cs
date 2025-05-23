@@ -44,6 +44,7 @@ namespace EduVerse.Data.Implementation
                 InstructorId = s.InstructorId,
                 StartDate = s.StartDate,
                 EndDate = s.EndDate,
+                Thumbnail = s.Thumbnail,
                 Category = new CourseCategoryDto
                 {
                     CategoryId = s.Category.CategoryId,
@@ -81,6 +82,7 @@ namespace EduVerse.Data.Implementation
                     InstructorId = c.InstructorId,
                     StartDate = c.StartDate,
                     EndDate = c.EndDate,
+                    Thumbnail = c.Thumbnail,
                     Category = new CourseCategoryDto()
                     {
                         CategoryId = c.Category.CategoryId,
