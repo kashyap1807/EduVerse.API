@@ -18,10 +18,10 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpPost]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EnrollmentDto))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(StatusCodes.Status403Forbidden)]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EnrollmentDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> AddEnrollmentAsync([FromBody] EnrollmentDto dto)
         {
             if (dto == null)
@@ -39,11 +39,11 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpGet("{id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EnrollmentDto))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(StatusCodes.Status403Forbidden)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EnrollmentDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetEnrollmentByIdAsync(int id)
         {
             var enrollment = await _enrollmentService.GetEnrollmentByIdAsync(id);
@@ -55,10 +55,10 @@ namespace EduVerse.API.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EnrollmentDto>))]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(StatusCodes.Status403Forbidden)]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<EnrollmentDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetEnrollmentByUserIdAsync(int userId)
         {
             var enrollment = await _enrollmentService.GetEnrollmentByUserIdAsync(userId);
