@@ -38,9 +38,9 @@ namespace EduVerse.API
                 var configuration = builder.Configuration;
 
                 //Azure Key Vault configuration
-                configuration.AddAzureKeyVault(
-                    new Uri("https://edv-keyvault.vault.azure.net/"),
-                    new DefaultAzureCredential());
+                //configuration.AddAzureKeyVault(
+                //    new Uri("https://edv-keyvault.vault.azure.net/"),
+                //    new DefaultAzureCredential());
                 //Seri log & API-insights
                 builder.Services.AddApplicationInsightsTelemetry();
 
