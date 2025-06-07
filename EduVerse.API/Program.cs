@@ -1,4 +1,5 @@
 
+using Azure.Identity;
 using EduVerse.API.Common;
 using EduVerse.API.Middlewares;
 using EduVerse.Data;
@@ -36,6 +37,10 @@ namespace EduVerse.API
                 var builder = WebApplication.CreateBuilder(args);
                 var configuration = builder.Configuration;
 
+                //Azure Key Vault configuration
+                configuration.AddAzureKeyVault(
+                    new Uri("https://edv-keyvault.vault.azure.net/"),
+                    new DefaultAzureCredential());
                 //Seri log & API-insights
                 builder.Services.AddApplicationInsightsTelemetry();
 
