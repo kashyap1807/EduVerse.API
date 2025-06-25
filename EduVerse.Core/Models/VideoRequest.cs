@@ -14,9 +14,7 @@ namespace EduVerse.Core.Models
 
         public string Topic { get; set; } = null!;
 
-        public string SubTopic { get; set; } = null!;
-
-        public string RequestStatus { get; set; } = null!;
+        public string SubTopic { get; set; } = null!;        
 
         public string ShortTitle { get; set; } = null!;
 
@@ -25,7 +23,7 @@ namespace EduVerse.Core.Models
         public string? Response { get; set; }
 
         public string? VideoUrls { get; set; }
-
+        public string RequestStatus { get; set; } = null!;
         public virtual UserProfile User { get; set; } = null!;
     }
 }

@@ -1,6 +1,8 @@
-﻿using EduVerse.Core.Dtos;
+﻿using EduVerse.API.Common;
+using EduVerse.Core.Dtos;
 using EduVerse.Service.Contract;
 using EduVerse.Service.Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
@@ -9,24 +11,33 @@ namespace EduVerse.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class VideoRequestController : ControllerBase
     {
         private readonly IVideoRequestService service;
+        private readonly IUserClaims userClaims;
 
-        public VideoRequestController(IVideoRequestService service)
+        public VideoRequestController(IVideoRequestService service, IUserClaims userClaims)
         {
             this.service = service;
+            this.userClaims = userClaims;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VideoRequestDto>>> GetAllAsync()
         {
-            List<VideoRequestDto> videoRequest = await service.GetAllAsync();
-            if (videoRequest == null)
-            {
-                return NotFound();
-            }
-            return Ok(videoRequest);
+            List<VideoRequestDto> videoRequests;
+            //var userRoles = userClaims.GetUserRoles();
+            //if (userRoles.Contains("Admin"))
+            //{
+                videoRequests = await service.GetAllAsync();
+            //}
+            //else
+            //{
+            //    var videoRequest = await service.GetByUserIdAsync(userClaims.GetUserId());
+            //    videoRequests = videoRequest.ToList();
+            //}
+            return Ok(videoRequests);
         }
 
         [HttpGet("{id}")]

@@ -21,9 +21,7 @@ namespace EduVerse.Core.Dtos
         [Required]
         [StringLength(50)]
         public string SubTopic { get; set; } = null!;
-        [Required]
-        [StringLength(50)]
-        public string RequestStatus { get; set; } = null!;
+        
         [Required]
         [StringLength(200)]
         public string ShortTitle { get; set; } = null!;
@@ -35,5 +33,8 @@ namespace EduVerse.Core.Dtos
         public string? Response { get; set; }
         [StringLength(2000)]
         public string? VideoUrls { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string RequestStatus { get; set; } = null!;
     }
 }

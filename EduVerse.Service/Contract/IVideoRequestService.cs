@@ -15,6 +15,7 @@ namespace EduVerse.Service.Contract
         Task<VideoRequestDto> CreateAsync(VideoRequestDto model);
         Task<VideoRequestDto> UpdateAsync(int id, VideoRequestDto model);
         Task DeleteAsync(int id);
+        Task<VideoRequestDto> SendVideoRequestAckEmail(VideoRequestDto model);
     }
 }
  
