@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,13 +20,15 @@ namespace EduVerse.Service.Implementation
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
         private readonly ILogger<VideoRequestService> logger;
+        private readonly HttpClient httpClient;
 
-        public VideoRequestService(IVideoRequestRepository repository,IMapper mapper,IConfiguration configuration, ILogger<VideoRequestService> logger)
+        public VideoRequestService(IVideoRequestRepository repository,IMapper mapper,IConfiguration configuration, ILogger<VideoRequestService> logger, HttpClient httpClient)
         {
             this.repository = repository;
             this.mapper = mapper;
             this.configuration = configuration;
             this.logger = logger;
+            this.httpClient = httpClient;
         }
 
         public async Task<VideoRequestDto> CreateAsync(VideoRequestDto model)
@@ -69,6 +72,21 @@ namespace EduVerse.Service.Implementation
             mapper.Map(model, existingVideoRequest);
             var updatedVideoRequest = await repository.UpdateAsync(existingVideoRequest);
             return mapper.Map<VideoRequestDto>(updatedVideoRequest);
+        }
+
+        public async Task<VideoRequestDto> SendVideoRequestAckEmail(VideoRequestDto model)
+        {
+            var videoModelRequest = new VideoRequestDto() { VideoRequestId = model.VideoRequestId };
+            var _functionUrl = configuration["AzureFunction:VideoRequestTriggerUrl"];
+            logger.LogInformation("_functionUrl:" + _functionUrl);
+
+            var response = await httpClient.PostAsJsonAsync(_functionUrl, videoModelRequest);
+
+            logger.LogInformation($"response code: {response.StatusCode}");
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<VideoRequestDto>();
         }
     }
 }
