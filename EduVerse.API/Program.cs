@@ -10,7 +10,9 @@ using EduVerse.Service.Implementation;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
@@ -42,6 +44,18 @@ namespace EduVerse.API
                 //    new Uri("https://edv-keyvault.vault.azure.net/"),
                 //    new DefaultAzureCredential());
                 //Seri log & API-insights
+
+                // Add Database health checks 
+                builder.Services.AddHealthChecks()
+                    .AddSqlServer(
+                        connectionString: configuration.GetConnectionString("EduVerseDbContext"),
+                        healthQuery: "SELECT 1;", // Query to check database health.
+                        name: "sqlserver",
+                        failureStatus: HealthStatus.Degraded, // Degraded health status if the check fails.
+                        tags: new[] { "db", "sql" })
+                    .AddCheck("Memory", new PrivateMemoryHealthCheck(1024 * 1024 * 1024)); // A custom health check for memory.
+
+                //Add Serilog and Application Insights
                 builder.Services.AddApplicationInsightsTelemetry();
 
                 builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfiguration
@@ -193,6 +207,35 @@ namespace EduVerse.API
 
                 app.UseAuthentication();
                 app.UseAuthorization();
+
+                // Top-level route mapping for health checks
+                app.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    ResponseWriter = HealthCheckResponseWriter.WriteJsonResponse
+                });
+
+                // Liveness probe
+                app.MapHealthChecks("/health/live", new HealthCheckOptions
+                {
+                    Predicate = _ => false, // No specific checks, just indicates the app is live
+                    ResponseWriter = async (context, report) =>
+                    {
+                        context.Response.ContentType = "application/json";
+                        var json = new
+                        {
+                            status = report.Status.ToString(),
+                            description = "Liveness check - the app is up"
+                        };
+                        await context.Response.WriteAsJsonAsync(json);
+                    }
+                });
+
+                // Readiness probe
+                app.MapHealthChecks("/health/ready", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("ready"), // Only run checks tagged as "ready"
+                    ResponseWriter = HealthCheckResponseWriter.WriteJsonResponse
+                });
 
                 app.MapControllers();
 
