@@ -2,23 +2,36 @@
 using EduVerse.Core.Models;
 using EduVerse.Data.Contract;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EduVerse.Data.Implementation
 {
     public class VideoRequestRepository : IVideoRequestRepository
     {
         private readonly EduVerseDbContext dbContext;
+        private readonly ILogger<VideoRequestRepository> Logger;
 
-        public VideoRequestRepository(EduVerseDbContext dbContext)
+        public VideoRequestRepository(EduVerseDbContext dbContext,ILogger<VideoRequestRepository> Logger)
         {
             this.dbContext = dbContext;
+            this.Logger = Logger;
         }
 
         public async Task<VideoRequest> AddAsync(VideoRequest videoRequest)
         {
-            dbContext.VideoRequests.Add(videoRequest);
-            await dbContext.SaveChangesAsync();
-            return videoRequest;
+            
+            try
+            {
+                dbContext.VideoRequests.Add(videoRequest);
+                await dbContext.SaveChangesAsync();
+                return videoRequest;
+            }
+            catch (DbUpdateException ex)
+            {
+                var innerMessage = ex.InnerException?.Message;
+                Logger.LogError("DB Update Error: {Message}", innerMessage);
+                throw; // rethrow to preserve stack trace
+            }
         }
 
         public async Task DeleteAsync(int id)
