@@ -49,7 +49,7 @@ namespace EduVerse.API.Controllers
 
         [HttpPost]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> AddCourse([FromBody] CourseDetailDto courseDto)
         {
@@ -63,7 +63,7 @@ namespace EduVerse.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseDetailDto courseDetailDto)
         {
@@ -82,7 +82,7 @@ namespace EduVerse.API.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        //[AdminRole]
+        [AdminRole]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes:Write")]
         public async Task<IActionResult> DeleteCourse(int id)
         {

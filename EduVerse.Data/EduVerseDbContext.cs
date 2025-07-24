@@ -65,15 +65,15 @@ public partial class EduVerseDbContext : DbContext
             entity.ToTable("Course");
 
             entity.Property(e => e.CourseType)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(10);
-            entity.Property(e => e.Description).IsRequired();
+            entity.Property(e => e.Description).HasColumnType("nvarchar(max)"); ;
             entity.Property(e => e.Duration).HasColumnType("decimal(5, 2)");
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
             entity.Property(e => e.Title)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(100);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Courses)
