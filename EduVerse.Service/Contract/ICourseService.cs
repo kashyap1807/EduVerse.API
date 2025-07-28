@@ -10,6 +10,7 @@ namespace EduVerse.Service.Contract
     public interface ICourseService
     {
         Task<List<CourseDto>> GetAllCoursesAsync(int? categoryId = null);
+        Task<List<CourseDto>> SearchCoursesAsync(string searchTerm);
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
 
         Task AddCourseAsync(CourseDetailDto courseDto);

@@ -13,6 +13,7 @@ namespace EduVerse.Data.Contract
         //return just list of course
         // with get course by categoryId
         Task<List<CourseDto>> GetAllCourseAsync(int? categoryId = null);
+        Task<List<CourseDto>> SearchCoursesAsync(string searchTerm);
         //return Detailed Particular course
         Task<CourseDetailDto> GetCourseDetailAsync(int courseId);
         Task AddCourseAsync(Course course);

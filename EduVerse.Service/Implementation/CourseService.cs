@@ -22,6 +22,10 @@ namespace EduVerse.Service.Implementation
             return courseRepository.GetAllCourseAsync(categoryId);
         }
 
+        public Task<List<CourseDto>> SearchCoursesAsync(string searchTerm)
+        {
+            return courseRepository.SearchCoursesAsync(searchTerm);
+        }
         public Task<CourseDetailDto> GetCourseDetailAsync(int courseId)
         {
             return courseRepository.GetCourseDetailAsync(courseId);
