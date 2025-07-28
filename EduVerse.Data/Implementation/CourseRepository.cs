@@ -61,7 +61,50 @@ namespace EduVerse.Data.Implementation
 
             return courses;
         }
+        public async Task<List<CourseDto>> SearchCoursesAsync(string searchTerm)
+        {
+            var query = dbContext.Courses
+                .Include(c => c.Category)
+                .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var lowerSearch = searchTerm.ToLower();
+                query = query.Where(c => c.Title.ToLower().Contains(lowerSearch) || 
+                                         c.Description.ToLower().Contains(lowerSearch) ||
+                                         c.Category.CategoryName.ToLower().Contains(lowerSearch));
+            }
+
+            var courses = await query.Select(s => new CourseDto
+            {
+                CourseId = s.CourseId,
+                Title = s.Title,
+                Description = s.Description,
+                Price = s.Price,
+                CourseType = s.CourseType,
+                SeatsAvailable = s.SeatsAvailable,
+                Duration = s.Duration,
+                CategoryId = s.CategoryId,
+                InstructorId = s.InstructorId,
+                StartDate = s.StartDate,
+                EndDate = s.EndDate,
+                Thumbnail = s.Thumbnail,
+                Category = new CourseCategoryDto
+                {
+                    CategoryId = s.Category.CategoryId,
+                    CategoryName = s.Category.CategoryName,
+                    Description = s.Category.Description
+                },
+                UserRating = new UserRatingDto
+                {
+                    CourseId = s.CourseId,
+                    AverageRating = s.Reviews.Any() ? Convert.ToDecimal(s.Reviews.Average(r => r.Rating)) : 0,
+                    TotalRating = s.Reviews.Count
+                }
+            }).ToListAsync();
+
+            return courses;
+        }
         public async Task<CourseDetailDto> GetCourseDetailAsync(int courseId)
         {
             var course = await dbContext.Courses

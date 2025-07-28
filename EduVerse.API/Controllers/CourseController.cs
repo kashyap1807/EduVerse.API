@@ -29,6 +29,13 @@ namespace EduVerse.API.Controllers
             return Ok(courses);
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<List<CourseDto>>> SearchCoursesAsync([FromQuery] string searchTerm)
+        {
+            var courses = await courseService.SearchCoursesAsync(searchTerm);
+            return Ok(courses);
+        }
+
         [HttpGet("Category/{categoryId}")]
         public async Task<ActionResult<List<CourseDto>>> GetAllCoursesByCategoryIdAsync([FromRoute] int categoryId)
         {
