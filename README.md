@@ -1,48 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduVerse API - README</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2c3e50;
-    }
-    h1 {
-      border-bottom: 2px solid #3498db;
-      padding-bottom: 10px;
-    }
-    h2 {
-      margin-top: 30px;
-      border-left: 4px solid #3498db;
-      padding-left: 10px;
-    }
-    ul {
-      margin: 10px 0 20px 25px;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    .section {
-      background: #fff;
-      padding: 15px 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .highlight {
-      font-weight: bold;
-      color: #3498db;
-    }
-  </style>
-</head>
 <body>
 
   <h1>EduVerse API</h1>
@@ -51,7 +8,17 @@
     for both students and instructors. The API powers course management, user enrollment, payments, 
     and integrations with Azure services to deliver a secure and scalable e-learning solution.
   </p>
-
+  
+  <div class="section">
+    <h2>🌐 Production Link</h2>
+    <p>
+      Access the live production deployment here:  
+      <a href="https://eduversebykashyap.azurewebsites.net/" target="_blank">
+        https://eduversebykashyap.azurewebsites.net/
+      </a>
+    </p>
+  </div>
+  
   <div class="section">
     <h2>🚀 Project Overview</h2>
     <ul>
